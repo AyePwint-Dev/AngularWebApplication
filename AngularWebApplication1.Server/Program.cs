@@ -4,6 +4,16 @@ using AngularWebApplication1.Server.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+// Enable CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost", policy =>
+    {
+        policy.WithOrigins("https://localhost:4200")
+              .AllowAnyMethod() 
+              .AllowAnyHeader();
+    });
+});
 
 // Add services to the container.
 //Add DB connection
@@ -19,6 +29,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// Use CORS middleware
+app.UseCors("AllowLocalhost");
 
 app.UseDefaultFiles();
 app.UseStaticFiles();

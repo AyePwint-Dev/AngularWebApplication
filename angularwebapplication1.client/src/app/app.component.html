@@ -2,90 +2,90 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-<h2>Template-Driven Form</h2>
-<form #form="ngForm" (ngSubmit)="onSubmit(form)">
-  <div>
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" ngModel />
-  </div>
-  <div>
-    <label for="email">Email:</label>
-    <input type="text" id="email" name="email" ngModel />
-  </div>
-  <button type="submit"> Submit</button>
-</form>
- 
-<h1 id="ProductLabel"> Product List</h1>
-<button style="margin: 50px; padding: 10px"
-        type="button"
-        class="btn btn-primary"
-        (click)="openPopup()">
-  Add Product
-</button>
-<div class="modal"
-     tabindex="-1"
-     role="dialog"
-     [ngStyle]="{'display':displayStyle}">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="ProductModalLabel"></h4>
-      </div>
-      <div class="modal-body">
-        <div class="mb-3 row">
-          <label class="col-sm-6 col-form-label text-start"> Id</label>
-          <div class="col-sm-6">
-            <input type="text" class="form-control" id="ProductId" readonly="readonly">
-          </div>
-        </div>
-        <div class="mb-3 row">
-          <label class="col-sm-6 col-form-label text-start"> Product Name</label>
-          <div class="col-sm-6">
-            <input type="text" class="form-control" id="ProductName">
-          </div>
-        </div>
-        <div class="mb-3 row">
-          <label class="col-sm-6 col-form-label text-start">Price</label>
-          <div class="col-sm-6">
-            <input type="text" class="form-control" id="Price">
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger"
-                (click)="closePopup()">
-          Close
-        </button>
+<h2>Reactive Form</h2>
+<form [formGroup]="personForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" formControlName="name" />
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="text" id="email" formControlName="email" />
+    </div>
+    <button type="submit"> Submit</button>
+  </form>
 
-        <button type="button" class="btn btn-primary" id="btnSave" *ngIf="isShowSaveBtn" (click)="createProduct()">Save</button>
-        <button type="button" class="btn btn-primary" id="btnUpdate" *ngIf="isShowUpdateBtn" (click)="updateProduct()">Update</button>
+  <h1 id="ProductLabel"> Product List</h1>
+  <button style="margin: 50px; padding: 10px"
+          type="button"
+          class="btn btn-primary"
+          (click)="openPopup()">
+    Add Product
+  </button>
+  <div class="modal"
+       tabindex="-1"
+       role="dialog"
+       [ngStyle]="{'display':displayStyle}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="ProductModalLabel"></h4>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3 row">
+            <label class="col-sm-6 col-form-label text-start"> Id</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="ProductId" readonly="readonly">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-sm-6 col-form-label text-start"> Product Name</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="ProductName">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-sm-6 col-form-label text-start">Price</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="Price">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger"
+                  (click)="closePopup()">
+            Close
+          </button>
+
+          <button type="button" class="btn btn-primary" id="btnSave" *ngIf="isShowSaveBtn" (click)="createProduct()">Save</button>
+          <button type="button" class="btn btn-primary" id="btnUpdate" *ngIf="isShowUpdateBtn" (click)="updateProduct()">Update</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
-<table *ngIf="products" class="table">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Product Name</th>
-      <th>Product Price</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let Product of products">
-      <td>{{ Product.id }}</td>
-      <td>{{ Product.name }}</td>
-      <td>{{ Product.price }}</td>
+  <table *ngIf="products" class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Product Name</th>
+        <th>Product Price</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let Product of products">
+        <td>{{ Product.id }}</td>
+        <td>{{ Product.name }}</td>
+        <td>{{ Product.price }}</td>
 
 
-      <td>
-        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ProductModal" (click)="getProduct(Product.id);openPopupUpdate()">Update</button>
-        <button type="button" class="btn btn-danger" (click)=deleteProduct(Product.id)>Delete</button>
-      </td>
+        <td>
+          <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ProductModal" (click)="getProduct(Product.id);openPopupUpdate()">Update</button>
+          <button type="button" class="btn btn-danger" (click)=deleteProduct(Product.id)>Delete</button>
+        </td>
 
-    </tr>
-  </tbody>
-</table>
+      </tr>
+    </tbody>
+  </table>

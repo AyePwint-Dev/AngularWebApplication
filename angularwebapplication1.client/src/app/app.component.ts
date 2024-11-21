@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 interface Product {
   id: number
   name: string;
   price: number;
 }
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,13 +14,23 @@ interface Product {
 })
 export class AppComponent implements OnInit {
   public products: Product[] = [];
-  public apiUrl: string = 'http://localhost:5252/api/Product'; //how to get this
+  public apiUrl: string = 'https://localhost:7100/api/Product'; //how to get this
   isShowSaveBtn = false;
   isShowUpdateBtn = false;
-  constructor(private http: HttpClient) {}
+  personForm = new FormGroup({
+    name: new FormControl('APP '),
+    email: new FormControl('app@gmail.com')
+  });
+    //form: FormGroup<{ name: FormControl<string | null>; email: FormControl<string | null>; }>;
+  constructor(private http: HttpClient) {    
+}
 
   ngOnInit() {
     this.getproducts();
+    this.personForm = new FormGroup({
+      name: new FormControl(''),
+      email: new FormControl('')
+    });
   }
   getproducts() {
     this.http.get<Product[]>(this.apiUrl).subscribe(
@@ -36,9 +46,9 @@ export class AppComponent implements OnInit {
   /**
    * onSubmit(form)
    */
-  onSubmit(form: any) {
-    console.log('Form Submitted!', form);
-    alert("template-driven-form");
+  onSubmit() {
+    console.log('Form Submitted!', this.personForm.value);
+    alert("Reactive form active");
   }
   openPopup() {
     this.displayStyle = "block";
@@ -116,17 +126,3 @@ export class AppComponent implements OnInit {
 
   title = 'angularapplication.client';
 }
-
-//  getForecasts() {
-//    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
-//      (result) => {
-//        this.forecasts = result;
-//      },
-//      (error) => {
-//        console.error(error);
-//      }
-//    );
-//  }
-
-//  title = 'angularwebapplication1.client';
-//}
