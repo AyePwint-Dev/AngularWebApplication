@@ -1,0 +1,6 @@
+@AngularWebApplication1.Server_HostAddress = http://localhost:5014
+
+GET {{AngularWebApplication1.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
