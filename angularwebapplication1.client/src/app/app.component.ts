@@ -14,7 +14,7 @@ interface Product {
 })
 export class AppComponent implements OnInit {
   public products: Product[] = [];
-  public apiUrl: string = 'https://localhost:7100/api/Product'; //how to get this
+  public apiUrl: string = 'https://localhost:7100/api/Product'; //backend api call
   isShowSaveBtn = false;
   isShowUpdateBtn = false;
   personForm = new FormGroup({
